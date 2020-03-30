@@ -9,7 +9,7 @@ public class Assembly {
 
 
             public Assembly(String name) {
-
+                this.name = name;
             }
 
             public String getName() {

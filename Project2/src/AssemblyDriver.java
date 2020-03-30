@@ -5,70 +5,69 @@ public class AssemblyDriver {
 
 
     public static void main(String[] args) {
-        ArrayList<Assembly> parts = new ArrayList<>();
+        ArrayList<Assembly> assemblies = new ArrayList<>();
         // References
-        boolean usercheck = false;
-        while (true){
+        boolean doneCheck = false;
+        while (true) {
 
-
-
-            String newparts;
+            
             Scanner input = new Scanner(System.in);
             System.out.print("\nEnter the assembly number you would like to build (D if done): ");
-            newparts = input.nextLine();
+            String assemblyName = input.nextLine();
 
-            if( newparts.equals("D") || newparts.equals("d")){
-                usercheck = true;
+            if (assemblyName.equals("D") || assemblyName.equals("d")) {
+                doneCheck = true;
                 break;
             }
 
             System.out.print("\nAdd parts:");
-            Assembly t = new Assembly(newparts);
+            Assembly t = new Assembly(assemblyName);
 
 
             do {
-
 
 
                 System.out.print("\nPart number: ");
                 String partName = input.nextLine();
 
                 System.out.print("Serial number: ");
-                String userSerialNumber = input.nextLine();
-                Integer.parseInt(userSerialNumber);
+                String serial = input.nextLine();
 
-                System.out.print("Part weight: ");
-                int  weight = 0;
-                String userweight = input.nextLine();
-                Integer.parseInt(userweight);
+                System.out.print("Part weight (0-100): ");
+                String userWeight = input.nextLine();
+                int weight = 0;
+                try {
+                    weight = Integer.parseInt(userWeight);
+                } catch (Exception e) {
+                    System.out.println(userWeight + " doesn't seem to be an integer, provide a value between 0-100.");
+                    System.exit(2);
+                }
 
                 System.out.print("Part surface area: ");
-                double surfaceArea = 0.0;
                 String userArea;
                 userArea = input.nextLine();
-                Double.parseDouble(userArea);
+                double surfaceArea = Double.parseDouble(userArea);
 
                 System.out.print("\nAdd another part to this assembly? (Y or N): ");
                 String yn = input.nextLine();
 
+                t.addPartToAssembly(partName, serial, weight, surfaceArea);
 
-
-                if (yn.equalsIgnoreCase("Y")){
+                if (yn.equalsIgnoreCase("Y")) {
                     continue;
                 } else {
-                    parts.add(t);
+                    assemblies.add(t);
                     break;
                 }
 
 
-
-            } while (usercheck == false);
+            } while (doneCheck == false);
 
 
         }//while loop
         System.out.println("Assembly Report");
         System.out.println("============================");
-        for (Assembly e: parts){
+        for (Assembly e : assemblies) {
             System.out.println(e.toString());
         }
         System.exit(-1);
